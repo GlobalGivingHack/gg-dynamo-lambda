@@ -48,3 +48,17 @@ Event data:
   ]
 }
 ```
+
+## AWS architecture
+[Architecture diagram](https://raw.githubusercontent.com/GlobalGivingHack/gg-dynamo-lambda/master/aws_architecture_diagram.png)
+### DynamoDb
+- CharityMessages is populated with the SMS and attachment sent by a charity. The UI renders this table.
+- GlobalGiving maps the charity to the mobile # sending the message.
+- gg_donor, gg_donor_event and gg_transaction were future ideas to store each message sent by a charity against their donors, for the personalised donor wall. gg_notify_donors uses these tables.
+
+### SNS
+- charity_sent_message is published to by gg_process_sms_incoming.py after the message is processed.
+- send-email-step-for-bulgaria-foundation contains donor email subscriptions. gg_notify_donors publishes to it with the charity's message and attachment link.
+     
+### API Gateway
+- twilio-apigateway invokes gg_process_sms_incoming.py when an SMS is sent by Twilio.
