@@ -12,8 +12,8 @@ from twilio.rest import Client
 
 # create Twilio session
 # Add Twilio Keys
-account_sid = "AC6e7b4be234c3fdf028d93dbc23765468"
-auth_token = "dbd7e8fe77622e5eb41a30abe5eaf033"
+account_sid = ""
+auth_token = ""
 phone_number = "+17255021401"
 sns_completion_topic = "arn:aws:sns:us-west-1:878174247419:charity_sent_message"
 client = Client(account_sid, auth_token)
@@ -66,7 +66,7 @@ def fire_sns(charity, message):
     client = boto3.client('sns')
     response = client.publish(
         TargetArn=sns_completion_topic,
-        Message=json.dumps({'default': json.dumps(message)}),
+        Message=json.dumps({"default": json.dumps(message)}),
         MessageStructure='json'
     )
 
